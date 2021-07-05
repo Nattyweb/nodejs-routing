@@ -6,14 +6,21 @@ fs = require('fs')
 
 //create server
 server = http.createServer((req, res) =>{
+	let filePath = "";
 
     //build a dynamic file path to determine the page to send to brouser
 
     if(req.url == '/' || '/home') {
-    	let 
+    	filePath = path.join(__dirname, "index.html")
     }
-	let filePath = path.join(
-	__dirname, req.url == '/' ||'/home' ? 'index.html' : '/about-us' ? '/about.html' : req.url);
+	else if(req.url == "/about" || "/about-us") {
+		filePath = path.join(__dirname, "/about.html")
+	}
+	else {
+		filePath = path.join(__dirname, req.url)
+	}
+	//let filePath = path.join(
+	//__dirname, req.url == '/' ||'/home' ? 'index.html' : '/about-us' ? '/about.html' : req.url);
 
 //Read content of html page and  send to brouser
 fs.readFile(filePath, "utf-8", (err, content) => {
